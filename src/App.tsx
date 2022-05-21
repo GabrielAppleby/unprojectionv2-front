@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
+import TabPanel from "./components/panels/TabPanel";
+import {DashboardPanel} from "./components/panels/DashboardPanel";
+import {ClassifierDataset, Dashboard, Dashboards, Dataset, InterpolationDataset} from "./constants";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [value, setValue] = React.useState(Dashboard.Interpolation);
+
+    const handleChange = useCallback((event: React.ChangeEvent<{}>, newValue: Dashboard) => {
+        setValue(newValue);
+    }, []);
+
+
+
+    return (
+        <div className="App">
+            <TabPanel options={Dashboards} value={value} handleChange={handleChange}/>
+            <DashboardPanel dashboard={value}/>
+        </div>
+    );
 }
 
 export default App;
